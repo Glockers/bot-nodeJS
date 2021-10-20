@@ -19,23 +19,37 @@ async function getPage(url){
     })
 }
 
- async function getFileBook(url){
+async function getFileBook(url){
     const $ = await getPage(url);
     url = "https://limbook.net"+$("a.download-links__icon.download-links__icon--fb2").attr("href").trim("");
-    return request(url).pipe(fs.createWriteStream('buffer.zip'));
-}
-//  function unzipFile(){
-//      fs.createReadStream('buffer.zip').pipe(unzipper.Extract({ path: 'files' }));
-// }
-//  function deleteFileBook(){
-//     let nameFile = "buffer.zip"
-//      fs.unlink(nameFile, (err)=>{
-//         if (err) console.log(err); // если возникла ошибка  
-//         else console.log(`${nameFile} was deleted`);
-//     })
-// }
+    return Promise.resolve(request(url).pipe(fs.createWriteStream('buffer.zip')));
+     console.log("1")
 
-let a = await getFileBook('https://limbook.net/book/istochnik.html')
+}
+function unzipFile(){
+    return Promise.resolve(fs.createReadStream('buffer.zip').pipe(unzipper.Extract({ path: 'files' })));
+     console.log("2")
+
+}
+function deleteFileBook(){
+    let nameFile = "buffer.zip"
+
+    return Promise.resolve(fs.unlink(nameFile, (err)=>{
+        if (err) console.log("Возникла ошибка 2"); // если возникла ошибка  
+        else console.log(`${nameFile} was deleted`);
+    }))
+}
+
+
+// (async function(){
+//     try{
+//     await getFileBook('https://limbook.net/book/istochnik.html');
+//     await unzipFile();
+//     await deleteFileBook();
+//     }
+//     catch(err){console.log("Ошибка 4")}
+// })()
+
 
 
      
