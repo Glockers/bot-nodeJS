@@ -27,6 +27,10 @@ module.exports = {
             console.log("Ссылка: "+url)
             return getIngoPage(url).then(t => 
                 {
+                t = t.filter(item=>{
+                    if(item.description !="") return true;
+                })
+
                 if (t.length == 0) {
                     return bot.sendMessage(chatId, "⛔️ Ничего не найдено.", optsFindBook)
                 }

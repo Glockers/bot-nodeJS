@@ -28,7 +28,6 @@ module.exports = {
         let result= [];
         const $ = await getPage(url)
         let last_page = await $('ul[class=pagination]>li:nth-child(11)>a').attr('href')
-        console.log(last_page)
         if(last_page){
             last_page= last_page.replace(/\D*/, "")
             for(let i=1; i<=last_page;i++){
@@ -40,7 +39,6 @@ module.exports = {
                 console.log(`${i}/${last_page}`)
             }
         }else{
-        console.log("Кнопок пагинаций нет.")
         
         
         const ads = await $('div[class=book-list__content]>div').each(i=>{
@@ -53,7 +51,7 @@ module.exports = {
     }
         fs.writeFile("test.json", JSON.stringify(result), 'utf8', (err) => {
             if (err) console.log(err); // если возникла ошибка    
-            else console.log("test.json was deleted");
+            else console.log("Данные записаны в файл parser.js");
           })
         return await result;
     }
