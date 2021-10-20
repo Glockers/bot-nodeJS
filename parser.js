@@ -1,7 +1,7 @@
 const fs = require("fs");
 const cheerio = require('cheerio');
 const request = require('request');
-
+const unzipper = require('unzipper');
 async function getPage(url){
 
     return new Promise((resolve, reject)=>{
@@ -19,11 +19,38 @@ async function getPage(url){
     })
 }
 
+ async function getFileBook(url){
+    const $ = await getPage(url);
+    url = "https://limbook.net"+$("a.download-links__icon.download-links__icon--fb2").attr("href").trim("");
+    return request(url).pipe(fs.createWriteStream('buffer.zip'));
+}
+//  function unzipFile(){
+//      fs.createReadStream('buffer.zip').pipe(unzipper.Extract({ path: 'files' }));
+// }
+//  function deleteFileBook(){
+//     let nameFile = "buffer.zip"
+//      fs.unlink(nameFile, (err)=>{
+//         if (err) console.log(err); // если возникла ошибка  
+//         else console.log(`${nameFile} was deleted`);
+//     })
+// }
+
+let a = await getFileBook('https://limbook.net/book/istochnik.html')
+
+
+     
 
 
 
 
 module.exports = {
+    // getFileBook: async function(url){
+    //     const $ = await getPage(url)
+    //     url = "https://limbook.net"+$("a.download-links__icon.download-links__icon--fb2").attr("href").trim("")
+    //     return request(url).pipe(fs.createWriteStream('doodle.zip'))
+    // },
+
+
     getIngoPage: async function (url){
         let result= [];
         const $ = await getPage(url)
