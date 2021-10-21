@@ -1,0 +1,59 @@
+
+
+// edit message
+bot.editMessageText("Готово!☑️", {
+            chat_id: chatID,
+            message_id: value.message_id,
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Изменить
+bot.on('callback_query', msg => {
+    bot.editMessageReplyMarkup({
+        reply_markup:  {
+            inline_keyboard: [
+                [
+                    {
+                        text: "text1",
+                        callback_data: "data1"
+                    }
+                ],
+                [
+                    {
+                        text: "text2",
+                        callback_data: "data2"
+                    }
+                ]
+            ]
+        }
+    }, {
+        chat_id: msg.from.id, 
+        message_id: msg.message.message_id
+    });
+})
+
+

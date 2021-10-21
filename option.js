@@ -4,10 +4,12 @@ module.exports = {
             inline_keyboard: [
                 [{
                     text: 'Посмотреть список команд',
-                    callback_data: 'help'
+                    callback_data: "help"
                 }],
-            ]
-        })
+            ],
+            
+        }),
+        
     },
     
     optsFindBook : {
