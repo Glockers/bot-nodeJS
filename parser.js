@@ -90,10 +90,7 @@ module.exports = {
             })
         })
     }
-        fs.writeFile("test.json", JSON.stringify(result), 'utf8', (err) => {
-            if (err) console.log(err); // если возникла ошибка    
-            else console.log("Данные записаны в файл test.json");
-          })
+        
         return await result;
     }
 }
