@@ -64,6 +64,8 @@ bot.getMe().then(me => {
         showAnimationText(chatID, match[0]);
     })
 
+
+    
     let flag = [];
     bot.onText(/\/test/, (msg, match) => {
         let chatID = msg.chat.id;

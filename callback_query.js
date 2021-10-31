@@ -9,17 +9,19 @@ const {
 
 module.exports = {
     startMenu: async function (data) {
+        let chatId = data?.message?.chat.id || data.chat.id
+        let message_id = data?.message?.message_id || data.message_id
         // edit Message
         await bot.editMessageText(`${data.from.first_name}, Добро пожаловать!`, {
-            chat_id: data.message.chat.id,
-            message_id: data.message.message_id,
+            chat_id: chatId,
+            message_id: message_id
         })
         // EDIT INLINE
         await bot.editMessageReplyMarkup({
             inline_keyboard: [...mainMenu.reply_markup.inline_keyboard]
         }, {
-            chat_id: data.from.id,
-            message_id: data.message.message_id
+            chat_id: chatId,
+            message_id: message_id
         })
         // END
     },

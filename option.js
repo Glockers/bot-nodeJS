@@ -44,7 +44,7 @@ module.exports = {
                 }],
                 [{
                     text: 'Вернуться назад',
-                    callback_data: 'find_back'  
+                    callback_data: 'returnMain'  
                 }]
             ],
         
