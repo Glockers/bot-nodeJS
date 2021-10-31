@@ -23,12 +23,10 @@ async function getFileBook(url){
     const $ = await getPage(url);
     url = "https://limbook.net"+$("a.download-links__icon.download-links__icon--fb2").attr("href").trim("");
     return Promise.resolve(request(url).pipe(fs.createWriteStream('buffer.zip')));
-     console.log("1")
 
 }
 function unzipFile(){
     return Promise.resolve(fs.createReadStream('buffer.zip').pipe(unzipper.Extract({ path: 'files' })));
-     console.log("2")
 
 }
 function deleteFileBook(){

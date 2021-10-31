@@ -18,6 +18,7 @@ const {
 
 
 
+// let flag=false;
 
 module.exports = {
 
@@ -30,24 +31,37 @@ module.exports = {
     },
 
     commandStart: async function (chatId, name) {
-        return bot.sendMessage(chatId, `${name}, Добро пожаловать`, mainOpts)
+        
+        bot.sendMessage(chatId, `${name}, Добро пожаловать`, mainOpts)
     },
 
 
     findBook: function (chatId) {
-        bot.on('message', async msg => {
-            bot.removeListener("message")
+        // bot.removeTextListener(/(.+)/)
+
+        // bot.removeListener('message')
+        bot.removeListener('message')
+
+        bot.once('message', async msg => {
+            // bot.removeTextListener(/(.+)/)
+            // if(flag){
+            //     return flag;
+            // }
+
+
+            console.log('test findBook: ')
+
+            // flag = true;
             const maxPage = await getFindBook(msg.text, msg.from.id)
 
             if (maxPage) {
                 setQuestion(chatId, async data => {
+                    // flag = false;
                     console.log("Max: " + maxPage)
                     await bot.sendMessage(chatId, "MaxPage: " + maxPage)
-                    console.log(data)
                     bot.sendMessage(chatId, `${msg.from.first_name}, Добро пожаловать`, mainOpts)
                 })
             }
-
 
         })
     },
