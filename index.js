@@ -51,9 +51,11 @@ bot.getMe().then(me => {
     })
 
     bot.onText(/\/find_page/, data => {
+
         const chatId = data.chat.id;
         bot.sendMessage(chatId, "Введи название книги")
         findBook(chatId)
+
     })
     // Анимация текста
     bot.onText(/\/anim (.+)/, (msg, match) => {
@@ -61,9 +63,22 @@ bot.getMe().then(me => {
 
         showAnimationText(chatID, match[0]);
     })
+
+    let flag = [];
     bot.onText(/\/test/, (msg, match) => {
         let chatID = msg.chat.id;
-        checkFunc(chatID)
+        if (flag.length == 3) {
+            bot.sendMessage(chatID, "Вы уже ответили на три вопроса.");
+        } else {
+            checkFunc(chatID, ({
+                text,
+                from
+            }) => {
+                console.log("From: " + from + " text: " + text)
+                flag.push(1);
+                console.log(flag)
+            })
+        }
     })
 
     bot.on('message_auto_delete_timer_changed', msg => {
@@ -80,7 +95,7 @@ bot.getMe().then(me => {
             }
         } = data;
 
-       
+
         if (data.data == 'find_page') {
             bot.editMessageText("Введи название книги", {
                 chat_id: data.message.chat.id,

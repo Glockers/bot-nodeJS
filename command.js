@@ -12,6 +12,23 @@ const {
 } = require('./option')
 const fs = require("fs")
 
+
+
+let opts = {
+    reply_markup: {
+        inline_keyboard: [
+
+        ]
+    }
+}
+
+function paginate(array, page_size, page_number) {
+    // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
+
+
+
 module.exports = {
 
     commandHelp: function (chatId) {
@@ -29,6 +46,7 @@ module.exports = {
 
     findBook: async function (chatId) {
         bot.on('message', msg => {
+            bot.removeListener("message")
             let bookName = msg.text;
             const encoded = encodeURI(bookName);
             const url = `https://limbook.net/search/?query=${encoded}`
@@ -46,21 +64,22 @@ module.exports = {
                     t[i].description = (i + 1) + '. ' + t[i].description;
                     descriptionList.push(`${t[i].description}   /  ${t[i].author}`)
                 }
-                bot.removeListener("message")
-                return bot.sendMessage(chatId, `👀📚 Найдены следующие книги:\n\n\n` + descriptionList.join("\n"))
+                bot.sendMessage(chatId, `👀📚 Найдены следующие книги:\n\n\n` + descriptionList.join("\n"))
+                let array = paginate(descriptionList, 2, 1)
+
+                return;
             })
         })
     },
-    checkFunc: async function (chatID) {
-        var a;
-       bot.on("message", msg => {
+    checkFunc: async function (chatID, callBack) {
+        bot.sendMessage(chatID, "Вопрос1: ")
+        bot.on("message", msg => {
             bot.removeListener("message")
-            fs.writeFile("test.json", JSON.stringify(msg.text), 'utf8', (err) => {
-                if (err) console.log(err); // если возникла ошибка    
-                else console.log("Данные записаны в файл test.json");
+            callBack({
+                text: msg.text,
+                from: msg.from.id
             })
         })
-        console.log(a) // underfined
 
     }
 }
